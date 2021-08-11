@@ -1,0 +1,12 @@
+<%= form_for @conn, "/quote", fn f -> %>
+  <label>
+    Name: <%= text_input f, :name %>
+  </label>
+  <label>
+    phone: <%= text_input f, :phone %>
+  </label>
+  <label>
+    email: <%= text_input f, :email %>
+  </label>
+  <%= submit "Submit" %>
+<% end %>

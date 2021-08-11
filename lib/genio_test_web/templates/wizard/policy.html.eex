@@ -1,0 +1,22 @@
+<h1>Policy</h1>
+
+<h2>Customer</h2>
+<p>name: <%= @params.quote.customer["name"] %></p>
+<p>phone: <%= @params.quote.customer["email"] %></p>
+<p>email: <%= @params.quote.customer["phone"] %></p>
+
+<h2>Vehicle</h2>
+<p>make: <%= @params.quote.vehicle["makes"] %></p>
+<p>model: <%= @params.quote.vehicle["year_model"] %></p>
+<p>version: <%= @params.quote.vehicle["version"] %></p>
+
+<h2>Policy</h2>
+<%= form_for @conn, "/quote/#{@params.quote.token}", fn f -> %>
+  <label>
+    Select cover <%= select(f, :cover, ["amplia": "amplia", "limited": "limited", "RC": "RC"]) %>
+  </label>
+  <label>
+    Payment method <%= select(f, :payment, ["contado": "contado", "semestral": "semestral", "trimestra": "trimestra"]) %>
+  </label>
+  <%= submit "Submit" %>
+<% end %>
