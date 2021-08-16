@@ -3,17 +3,19 @@ defmodule QuoteWizard do
   alias GenioTest.Step.{
     Customer, 
     Vehicle,
-    Policy,
+    OptionsQuote,
+    CustomerPolicy,
     Summary 
   }
 
   def new(params), do: Customer.update(params)
 
   def current(token) do
-    case Repo.get_by(GenioTest.Quote, token: token) do
+    case Repo.get_by(GenioTest.Quote.Quote, token: token) do
       nil -> {:error, :quote_not_found}
       quote -> 
-        {:ok, quote, get_step(quote).template()}
+        step = get_step(quote)
+        {:ok, quote, step.template(quote), step.changeset(quote)}
     end
   end
 
@@ -21,15 +23,17 @@ defmodule QuoteWizard do
     case quote.step do
       "1" -> Customer
       "2" -> Vehicle
-      "3" -> Policy 
-      "4" -> Summary 
+      "3" -> OptionsQuote 
+      "4" -> CustomerPolicy 
+      "5" -> Summary 
     end
   end
 
   def update(quote, params) do
-    step_module = get_step(quote)
-    case step_module.update(quote, params) do
+    case get_step(quote).update(quote, params) do
       {:ok, quote} -> {:ok, quote}
+      {:error, :incomplet_form, changeset, template, params} -> 
+        {:error, :incomplet_form, changeset, template, params}
       {:error, message} -> {:error, message}
     end
   end

@@ -1,0 +1,9 @@
+<h1>Datos del vehiculo</h1>
+
+<%= case @params.quote.ensurer_quote do %>
+  <% "aba" -> %>
+  <%= render(GenioTestWeb.OptionsQuoteView, "aba.html", Map.put(assigns, :changeset, @changeset) ) %>
+  <% _ -> %>
+  <%= render(GenioTestWeb.OptionsQuoteView, "generic.html", Map.put(assigns, :changeset, @changeset)) %>
+<% end %>
+

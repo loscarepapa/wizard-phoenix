@@ -1,11 +1,11 @@
 <h1>vehicle</h1>
-<p>name</p><%= @params.quote.customer["name"] %>
-<p>phone</p><%= @params.quote.customer["email"] %>
-<p>email</p><%= @params.quote.customer["phone"] %>
+<p>name</p><%= @params.quote.customer.name %>
+<p>phone</p><%= @params.quote.customer.email %>
+<p>email</p><%= @params.quote.customer.phone %>
 
-<%= form_for @conn, "/quote/#{@params.quote.token}", fn f -> %>
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
   <label>
-    Select make <%= select(f, :makes, ["Make1": "make1", "Make2": "make2", "Make3": "make3"]) %>
+    Select make <%= select(f, :make, ["Make1": "make1", "Make2": "make2", "Make3": "make3"]) %>
   </label>
   <label>
     Select model <%= select(f, :year_model, 2021..1990) %>

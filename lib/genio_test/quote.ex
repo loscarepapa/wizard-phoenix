@@ -1,21 +1,12 @@
-defmodule GenioTest.Quote do 
-  use Ecto.Schema
-  import Ecto.Changeset
+defmodule GenioTest.Quote do
+  alias GenioTest.Step.Customer
+  alias GenioTest.Quote.Quote
+  alias GenioTest.Repo
+  alias QuoteWizard
 
-  schema "quote" do
-    field :token, :string
-    field :customer, :map
-    field :vehicle, :map
-    field :policy, :map
-    field :step, :string
-  end
+  def create_quote(attrs \\ %{}), do: QuoteWizard.new(attrs)
 
-  @cast_params ~w(token customer vehicle policy step)a
+  def get_quote!(id), do: Repo.get!(Quote, id)
 
-  def changeset(quote, attr) do
-    quote
-    |> cast(attr, @cast_params)
-    |> validate_required([:token, :step, :customer])
-    |> unique_constraint(:token)
-  end
+  def change_quote(id), do: Repo.get!(Quote, id)
 end

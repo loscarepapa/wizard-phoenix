@@ -1,0 +1,4 @@
+<h1>Nueva cotizacion</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.wizard_path(@conn, :create)) %>
+

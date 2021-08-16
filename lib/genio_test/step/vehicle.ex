@@ -1,29 +1,22 @@
 defmodule GenioTest.Step.Vehicle do
+  alias GenioTest.Quote.Vehicle, as: VehicleSchema
+  alias GenioTest.Quote.Quote
   alias GenioTest.Repo
   alias QuoteWizard
-  alias GenioTest.Quote
-  alias Ecto.Changeset
 
   @current_template "vehicle.html"
 
-  def template(), do: @current_template 
+  def template(_quote), do: @current_template 
+  def changeset(_quote), do: VehicleSchema.changeset(%VehicleSchema{})
 
   def update(quote, params) do
-    vehicle = QuoteWizard.map_string_to_atom(params)
-              |> Map.delete(:_csrf_token)
-              |> Map.delete(:token)
+    to_update = %{
+      vehicle: QuoteWizard.map_string_to_atom(params) |> Map.get(:vehicle),
+      step: QuoteWizard.update_step(quote)
+    }
 
-    update_step = QuoteWizard.update_step(quote)
-
-    updated_quote = quote
-                    |> Changeset.change(%{vehicle: vehicle, step: update_step})
-                    |> Repo.update!()
-                    |> get_updated_quote()
-
-    {:ok, updated_quote}
-  end
-
-  def get_updated_quote(quote) do
-    Repo.get_by!(Quote, token: quote.token)
+    quote
+    |> Quote.changeset(to_update)
+    |> Repo.update()
   end
 end

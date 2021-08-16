@@ -23,6 +23,19 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :genio_test, :templates, %{
+  step_1: "index.html", 
+  step_2: "customer.html", 
+  step_3: "vehicle.html", 
+  step_4: %{
+    qualitas: "qualitas.html",
+    gnp: "gnp.html",
+    axa: "axa.html",
+    aba: "aba.html"
+  },
+  step_5: "issue.html"
+}
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

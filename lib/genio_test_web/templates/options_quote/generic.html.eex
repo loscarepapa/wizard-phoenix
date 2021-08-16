@@ -1,0 +1,24 @@
+<h1>Generic</h1>
+
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
+  <%= if !@changeset.valid? do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <label>
+    first_name: <%= text_input f, :first_name %>
+  </label>
+  <label>
+    last_name: <%= text_input f, :last_name %>
+  </label>
+  <label>
+    rfc: <%= text_input f, :rfc %>
+  </label>
+  <label>
+    gender: <%= text_input f, :gender %>
+  </label>
+  <%= submit "Submit" %>
+<% end %>
+
