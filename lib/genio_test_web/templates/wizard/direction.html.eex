@@ -1,0 +1,17 @@
+<h1>Direccion</h1>
+
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
+  <label>
+    street: <%= text_input f, :street %>
+  </label>
+  <label>
+    external_number: <%= text_input f, :external_number %>
+  </label>
+  <label>
+    external_number: <%= text_input f, :country %>
+  </label>
+  <br>
+  <%= button("Go back", to: "/quote/#{@params.quote.token}/goback", method: :post, class: "btn btn-danger") %>
+  <%= submit "submit" %>
+<% end %>
+

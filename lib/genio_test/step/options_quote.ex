@@ -11,7 +11,7 @@ defmodule GenioTest.Step.OptionsQuote do
 
   def update(quote, params) do
     to_update = %{
-      ensurer_quote: QuoteWizard.map_string_to_atom(params) |> Map.get(:ensurer),
+      ensurer_quote: QuoteWizard.map_string_to_atom(params["options_quote"]) |> Map.get(:ensurer),
       step: QuoteWizard.update_step(quote)
     }
 

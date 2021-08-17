@@ -5,7 +5,10 @@ defmodule QuoteWizard do
     Vehicle,
     OptionsQuote,
     CustomerPolicy,
-    Summary 
+    Direction, 
+    CustomerVehicle, 
+    GoBack,
+    Summary
   }
 
   def new(params), do: Customer.update(params)
@@ -19,22 +22,28 @@ defmodule QuoteWizard do
     end
   end
 
-  defp get_step(quote) do
+  def get_step(quote) do
     case quote.step do
       "1" -> Customer
       "2" -> Vehicle
       "3" -> OptionsQuote 
       "4" -> CustomerPolicy 
-      "5" -> Summary 
+      "5" -> Direction 
+      "6" -> CustomerVehicle 
+      "7" -> Summary 
     end
   end
 
   def update(quote, params) do
-    case get_step(quote).update(quote, params) do
-      {:ok, quote} -> {:ok, quote}
-      {:error, :incomplet_form, changeset, template, params} -> 
-        {:error, :incomplet_form, changeset, template, params}
-      {:error, message} -> {:error, message}
+    case params["action"] do
+      "goback" -> GoBack.update(quote)
+      _ -> 
+        case get_step(quote).update(quote, params) do
+        {:ok, quote} -> {:ok, quote}
+        {:error, :incomplet_form, changeset, template, params} -> 
+          {:error, :incomplet_form, changeset, template, params}
+        {:error, message} -> {:error, message}
+      end
     end
   end
 

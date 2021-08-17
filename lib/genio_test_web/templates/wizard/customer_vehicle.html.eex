@@ -1,0 +1,14 @@
+<h1>Datos de tu vehiculo</h1>
+
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
+  <label>
+    serie: <%= text_input f, :serie %>
+  </label>
+  <label>
+    motor: <%= text_input f, :motor %>
+  </label>
+  <br>
+  <%= button("Go back", to: "/quote/#{@params.quote.token}/goback", method: :post, class: "btn btn-danger") %>
+  <%= submit "submit" %>
+<% end %>
+

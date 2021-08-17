@@ -20,7 +20,7 @@ defmodule GenioTestWeb.Router do
     post "/quote", WizardController, :create
     get "/quote/:token", WizardController, :edit
     post "/quote/:token", WizardController, :update
-    post "/quote/:token/:ensurer", WizardController, :update
+    post "/quote/:token/:action", WizardController, :update
   end
 
   # Other scopes may use custom stacks.

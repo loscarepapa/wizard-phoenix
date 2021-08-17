@@ -10,6 +10,18 @@
 <p>model: <%= @params.quote.vehicle.year_model %></p>
 <p>version: <%= @params.quote.vehicle.version %></p>
 
-<%= button("Qualitas", to: "/quote/#{@params.quote.token}/qualitas", method: :post, class: "btn btn-success") %>
-<%= button("Ana", to: "/quote/#{@params.quote.token}/ana", method: :post, class: "btn btn-success") %>
-<%= button("Aba", to: "/quote/#{@params.quote.token}/aba", method: :post, class: "btn btn-success") %>
+<h2>Opciones de cotizacion</h2>
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
+  <%= hidden_input f, :ensurer, value: "qualitas" %>
+  <%= submit "Qualitas" %>
+<% end %>
+
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
+  <%= hidden_input f, :ensurer, value: "ana" %>
+  <%= submit "Ana" %>
+<% end %>
+
+<%= form_for @changeset, "/quote/#{@params.quote.token}", fn f -> %>
+  <%= hidden_input f, :ensurer, value: "aba" %>
+  <%= submit "Aba" %>
+<% end %>

@@ -1,5 +1,5 @@
 defmodule GenioTest.Step.CustomerPolicy do
-  alias GenioTest.Customer.Customer
+  alias GenioTest.Quote.Customer.Customer
   alias GenioTest.Quote.Quote
   alias GenioTest.Repo
   alias QuoteWizard
@@ -8,7 +8,8 @@ defmodule GenioTest.Step.CustomerPolicy do
   @current_template "customer_policy.html"
 
   def template(_quote), do: @current_template
-  def changeset(_quote), do: Customer.changeset(%Customer{})
+  def changeset(quote), do: 
+  Customer.changeset(%Customer{}, Map.from_struct(quote.customer))
 
   def update(quote, params) do
     customer_changeset = valid_customer_params(params)
@@ -30,9 +31,8 @@ defmodule GenioTest.Step.CustomerPolicy do
     end
   end
 
-  def valid_customer_params(params) do
+  def valid_customer_params(params), do:
   Customer.changeset(%Customer{}, merge_customer(params))
-  end
 
   def merge_customer(params) do
     params
