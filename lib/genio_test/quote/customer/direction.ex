@@ -9,7 +9,7 @@ defmodule GenioTest.Quote.Customer.Direction do
     field :country, :string
   end
 
-  @cast_params ~w(street external_number)a
+  @cast_params ~w(street external_number country)a
 
   def changeset(quote, attr \\ %{}) do
     quote
