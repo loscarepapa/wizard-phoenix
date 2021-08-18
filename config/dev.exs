@@ -16,7 +16,7 @@ config :genio_test, GenioTest.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :genio_test, GenioTestWeb.Endpoint,
-  http: [port: 4001],
+  http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
