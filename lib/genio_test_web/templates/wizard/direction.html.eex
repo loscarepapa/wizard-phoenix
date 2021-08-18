@@ -11,7 +11,10 @@
     external_number: <%= text_input f, :country %>
   </label>
   <br>
-  <%= button("Go back", to: "/quote/#{@params.quote.token}/goback", method: :post, class: "btn btn-danger") %>
   <%= submit "submit" %>
 <% end %>
 
+<%= form_for @conn,"/quote/#{@params.quote.token}", fn f -> %>
+  <%= hidden_input f, :go_back, value: "true" %>
+  <%= submit "Atras", class: "btn btn-danger" %>
+<% end %>

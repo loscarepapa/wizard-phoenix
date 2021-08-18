@@ -35,8 +35,8 @@ defmodule QuoteWizard do
   end
 
   def update(quote, params) do
-    case params["action"] do
-      "goback" -> GoBack.update(quote)
+    case params["go_back"] do
+      "true" -> GoBack.update(quote)
       _ -> 
         case get_step(quote).update(quote, params) do
         {:ok, quote} -> {:ok, quote}

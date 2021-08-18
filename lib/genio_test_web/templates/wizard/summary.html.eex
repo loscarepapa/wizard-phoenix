@@ -13,5 +13,7 @@
 <h2>Option</h2>
 <p>make: <%= @params.quote.ensurer_quote %></p>
 
-  <%= button("Go back", to: "/quote/#{@params.quote.token}/goback", method: :post, class: "btn btn-danger") %>
-
+<%= form_for @conn,"/quote/#{@params.quote.token}", fn f -> %>
+  <%= hidden_input f, :go_back, value: "true" %>
+  <%= submit "Atras", class: "btn btn-danger" %>
+<% end %>
