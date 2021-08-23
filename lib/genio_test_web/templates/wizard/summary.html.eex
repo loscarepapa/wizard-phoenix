@@ -1,19 +1,26 @@
 <h1>Summary</h1>
 
 <h2>Customer</h2>
-<p>name: <%= @params.quote.customer.name %></p>
-<p>phone: <%= @params.quote.customer.email %></p>
-<p>email: <%= @params.quote.customer.phone %></p>
+<p>name: <%= @params.customer.first_name %></p>
+<p>last_name: <%= @params.customer.last_name %></p>
+<p>rfc: <%= @params.customer.rfc %></p>
+<p>email: <%= @params.customer.rfc %></p>
 
 <h2>Vehicle</h2>
-<p>make: <%= @params.quote.vehicle.make %></p>
-<p>model: <%= @params.quote.vehicle.year_model %></p>
-<p>version: <%= @params.quote.vehicle.version %></p>
+<p>make: <%= @params.vehicle.make %></p>
+<p>model: <%= @params.vehicle.year_model %></p>
+<p>version: <%= @params.vehicle.version %></p>
 
-<h2>Option</h2>
-<p>make: <%= @params.quote.ensurer_quote %></p>
+<h2>Address</h2>
+<p>street: <%= @params.address.street %></p>
+<p>external_number: <%= @params.address.external_number %></p>
+<p>country: <%= @params.address.country %></p>
 
-<%= form_for @conn,"/quote/#{@params.quote.token}", fn f -> %>
+<h2>Payment method</h2>
+<p>method: <%= @params.payment_method.method %></p>
+<p>periodicity: <%= @params.payment_method.periodicity %></p>
+
+<%= form_for @conn,"/quote/#{@params.token}", fn f -> %>
   <%= hidden_input f, :go_back, value: "true" %>
   <%= submit "Atras", class: "btn btn-danger" %>
 <% end %>

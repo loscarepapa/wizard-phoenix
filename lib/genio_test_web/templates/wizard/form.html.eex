@@ -6,13 +6,25 @@
   <% end %>
 
   <label>
-    Name: <%= text_input f, :name %>
+    vehicle: <%= text_input f, :vehicle_quote %>
   </label>
   <label>
-    phone: <%= text_input f, :phone %>
+    age: <%= text_input f, :age %>
+  </label>
+  <label>
+    name: <%= text_input f, :name %>
+  </label>
+  <label>
+    gender: <%= text_input f, :gender %>
+  </label>
+  <label>
+    zip_code: <%= text_input f, :zip_code %>
   </label>
   <label>
     email: <%= text_input f, :email %>
+  </label>
+  <label>
+    phone: <%= text_input f, :phone %>
   </label>
   <%= submit "Submit" %>
 <% end %>

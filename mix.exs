@@ -45,7 +45,9 @@ defmodule GenioTest.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:elixir_uuid, "~> 1.2"}
+      {:elixir_uuid, "~> 1.2"},
+      {:ecto_enum, "~> 1.4"},
+      {:ecto_commons, git: "https://github.com/acolin/ecto_commons.git"}
     ]
   end
 

@@ -1,5 +1,5 @@
 defmodule GenioTestWeb.WizardController do
-  alias GenioTest.Quote.Customer
+  alias GenioTest.Quote.Quoting
   alias GenioTest.Quote.Quote
   alias GenioTest.Repo
   alias QuoteWizard
@@ -7,16 +7,16 @@ defmodule GenioTestWeb.WizardController do
   use GenioTestWeb, :controller
 
   def new(conn, _params) do
-    changeset = Customer.changeset(%Customer{})
-    render(conn, "new.html", changeset: changeset)
+    changeset = Quoting.changeset(%Quoting{})
+    render(conn, "quoting.html", changeset: changeset)
   end
 
-  def create(conn, %{"customer" => customer_params}) do
-    case QuoteWizard.new(customer_params) do
+  def create(conn, %{"quoting" => quoting_params}) do
+    case QuoteWizard.new(quoting_params) do
       {:ok, quote} -> 
         redirect(conn, to: "/quote/#{quote.token}")
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset.changes.customer)
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -25,20 +25,21 @@ defmodule GenioTestWeb.WizardController do
     case QuoteWizard.update(quote, params) do
       {:ok, quote} -> 
         redirect(conn, to: "/quote/#{quote.token}")
-      {:error, :incomplet_form, %Ecto.Changeset{} = changeset, template, params} -> 
-        render(conn, template, params: params, changeset: changeset)
-        redirect(conn, to: "/")
-      {:error, message} -> 
-        redirect(conn, to: "/")
+      {:error, changeset, params} -> 
+        render(conn, get_step_template(params), params: params, changeset: changeset)
     end
   end
 
   def edit(conn, %{"token" => token}) do
     case QuoteWizard.current(token) do
-      {:ok, quote, template, changeset} -> 
-        render(conn, template, params: %{quote: quote}, changeset: changeset)
-      {:error, message} -> 
+      {:ok, quote, changeset} -> 
+        render(conn, get_step_template(quote), params: quote, changeset: changeset)
+      {:error, _message} -> 
         redirect(conn, to: "/")
     end
+  end
+
+  defp get_step_template(quote) do
+    "#{to_string(quote.step)}.html"
   end
 end

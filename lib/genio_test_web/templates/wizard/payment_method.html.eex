@@ -1,0 +1,18 @@
+<h1>Paymen Method</h1>
+
+<%= form_for @changeset, "/quote/#{@params.token}", fn f -> %>
+  <label>
+    method: <%= select(f, :method, ["card": "card", "cash": "cash"]) %>
+  </label>
+  <label>
+    periodicity: <%= select(f, :periodicity, ["biannual": "biannual", "quarterly": "quarterly", "monthly": "monthly"]) %>
+  </label>
+  <br>
+  <%= submit "submit" %>
+<% end %>
+
+<%= form_for @conn,"/quote/#{@params.token}", fn f -> %>
+  <%= hidden_input f, :go_back, value: "true" %>
+  <%= submit "Atras", class: "btn btn-danger" %>
+<% end %>
+

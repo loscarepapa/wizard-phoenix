@@ -1,12 +1,15 @@
-<%= form_for @changeset, Routes.wizard_path(@conn, :create), fn f -> %>
+<%= form_for @changeset, "/quote/#{@params.token}", fn f -> %>
   <label>
-    Name: <%= text_input f, :name %>
+    first_name: <%= text_input f, :first_name %>
   </label>
   <label>
-    phone: <%= text_input f, :phone %>
+    last_name: <%= text_input f, :last_name %>
   </label>
   <label>
-    email: <%= text_input f, :email %>
+    rfc: <%= text_input f, :rfc %>
+  </label>
+  <label>
+    gender: <%= text_input f, :gender %>
   </label>
   <%= submit "Submit" %>
 <% end %>

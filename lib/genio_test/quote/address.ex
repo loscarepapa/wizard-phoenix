@@ -1,4 +1,4 @@
-defmodule GenioTest.Quote.Customer.Direction do 
+defmodule GenioTest.Quote.Address do 
   use Ecto.Schema
   import Ecto.Changeset
 

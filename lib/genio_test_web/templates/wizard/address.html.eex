@@ -1,0 +1,16 @@
+<h1>Address</h1>
+
+<%= form_for @changeset, "/quote/#{@params.token}", fn f -> %>
+  <label>
+    street: <%= text_input f, :street %>
+  </label>
+  <label>
+    external_number: <%= text_input f, :external_number %>
+  </label>
+  <label>
+    external_number: <%= text_input f, :country %>
+  </label>
+  <br>
+  <%= submit "submit" %>
+<% end %>
+
