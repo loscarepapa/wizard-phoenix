@@ -5,19 +5,22 @@ defmodule QuoteWizard.Step.Customer do
   alias Ecto.Changeset
 
   def init(_quote), do: Customer.changeset(%Customer{})
-
+  
   def update(quote, step_params) do
     step_params
-    |> valid?()
+    |> valid?(quote)
     |> persist!(quote)
   end
 
-  defp valid?(step_params) do
+  defp valid?(step_params, quote) do
     params = Utils.map_string_to_atom(step_params["customer"])
     changeset = Customer.changeset(%Customer{}, params)
-    case changeset.valid? do
-      true -> {:ok, params}
-      false -> {:error, changeset}
+
+    with :customer <- quote.step,
+         true <- changeset.valid?do
+         {:ok, params}
+    else
+      _ -> {:error, changeset}
     end
   end
 

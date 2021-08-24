@@ -8,19 +8,24 @@ defmodule QuoteWizard.Step.PaymentMethod do
 
   def update(quote, step_params) do
     step_params
-    |> valid?()
+    |> valid?(quote)
     |> persist!(quote)
   end
 
-  defp valid?(step_params) do
-    params = Utils.map_string_to_atom(step_params["payment_method"])
-    changeset = PaymentMethod.changeset(%PaymentMethod{}, params)
-    case changeset.valid? do
-      true -> {:ok, params}
-      false -> {:error, changeset}
+  defp valid?(step_params, quote) do
+    case step_params["payment_method"] do
+      nil -> {:error, :different_step, quote}
+      _ -> 
+        params = Utils.map_string_to_atom(step_params["payment_method"])
+        changeset = PaymentMethod.changeset(%PaymentMethod{}, params)
+        case changeset.valid? do
+          true -> {:ok, params}
+          false -> {:error, changeset}
+        end
     end
   end
 
+  defp persist!({:error,:different_step, _}, quote), do: {:ok, quote}
   defp persist!({:error, changeset}, quote), do: {:error, changeset, quote}
   defp persist!({:ok, params}, quote) do
     to_update = %{

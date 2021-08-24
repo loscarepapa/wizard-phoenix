@@ -11,7 +11,6 @@ defmodule QuoteWizard do
   }
 
   def new(params), do: Quoting.update(params)
-
   def current(token) do
     case Repo.get_by(GenioTest.Quote.Quote, token: token) do
       nil -> {:error, :quote_not_found}
@@ -35,8 +34,9 @@ defmodule QuoteWizard do
   end
 
   def get_step(quote) do
-    [{step, _val}] = Step.__enum_map__()
-                     |> Enum.filter(fn {step, _number} -> quote.step == step end)
+    [{step, _val}] = 
+      Step.__enum_map__()
+      |> Enum.filter(fn {step, _number} -> quote.step == step end)
 
     case step do
       :quoting -> Quoting 
