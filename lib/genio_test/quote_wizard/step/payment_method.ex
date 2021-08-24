@@ -2,23 +2,33 @@ defmodule QuoteWizard.Step.PaymentMethod do
   alias GenioTest.Quote.PaymentMethod
   alias GenioTest.Quote.Quote
   alias GenioTest.Repo
-  alias QuoteWizard
+  alias Ecto.Changeset
 
   def init(_quote), do: PaymentMethod.changeset(%PaymentMethod{})
-  def changeset(quote), do:
-    PaymentMethod.changeset(%PaymentMethod{}, quote.vehicle)
 
-  def update(quote, params) do
-    to_update = %{
-      payment_method: Utils.map_string_to_atom(params["payment_method"]),
-      step: Utils.next_step(quote.step)
-    }
-    case quote
-    |> Quote.changeset(to_update)
-    |> Repo.update()
-    do
-      {:ok, quote} -> {:ok, quote}
-      {:error, changeset} -> {:error, changeset, quote}
+  def update(quote, step_params) do
+    step_params
+    |> valid?()
+    |> persist!(quote)
+  end
+
+  defp valid?(step_params) do
+    params = Utils.map_string_to_atom(step_params["payment_method"])
+    changeset = PaymentMethod.changeset(%PaymentMethod{}, params)
+    case changeset.valid? do
+      true -> {:ok, params}
+      false -> {:error, changeset}
     end
+  end
+
+  defp persist!({:error, changeset}, quote), do: {:error, changeset, quote}
+  defp persist!({:ok, params}, quote) do
+    to_update = %{
+      payment_method: params,
+      step: Quote.next_step(quote.step)
+    }
+    quote 
+    |> Changeset.change(to_update)
+    |> Repo.update()
   end
 end

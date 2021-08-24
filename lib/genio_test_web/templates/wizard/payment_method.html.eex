@@ -1,6 +1,6 @@
 <h1>Paymen Method</h1>
 
-<%= form_for @changeset, "/quote/#{@params.token}", fn f -> %>
+<%= form_for @changeset, "/quotes/#{@params.token}", [method: "patch"], fn f -> %>
   <label>
     method: <%= select(f, :method, ["card": "card", "cash": "cash"]) %>
   </label>
@@ -11,7 +11,7 @@
   <%= submit "submit" %>
 <% end %>
 
-<%= form_for @conn,"/quote/#{@params.token}", fn f -> %>
+<%= form_for @conn,"/quotes/#{@params.token}", [method: "patch"], fn f -> %>
   <%= hidden_input f, :go_back, value: "true" %>
   <%= submit "Atras", class: "btn btn-danger" %>
 <% end %>

@@ -23,7 +23,7 @@ defmodule QuoteWizard do
 
   def update(quote, params) do
     case params["go_back"] do
-      "true" -> GoBack.update(quote)
+      "true" -> GoBack.update(quote, QuoteWizard)
       _ -> 
         case QuoteWizard.get_step(quote).update(quote, params) do
           {:ok, quote} -> {:ok, quote}
@@ -36,7 +36,7 @@ defmodule QuoteWizard do
 
   def get_step(quote) do
     [{step, _val}] = Step.__enum_map__()
-           |> Enum.filter(fn {step, _number} -> quote.step == step end)
+                     |> Enum.filter(fn {step, _number} -> quote.step == step end)
 
     case step do
       :quoting -> Quoting 

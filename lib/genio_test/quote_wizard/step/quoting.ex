@@ -9,7 +9,7 @@ defmodule QuoteWizard.Step.Quoting do
   def update(step_params) do
     step_params
     |> valid?()
-    |> save()
+    |> persist!()
   end
 
   defp valid?(step_params) do
@@ -21,13 +21,13 @@ defmodule QuoteWizard.Step.Quoting do
     end
   end
 
-  defp save({:error, changeset}), do: {:error, changeset}
-  defp save({:ok, params}) do
-        to_update = %{
-          quoting: params,
-          step: Utils.update_step()
-        }
-   %Quote{} 
+  defp persist!({:error, changeset}), do: {:error, changeset}
+  defp persist!({:ok, params}) do
+    to_update = %{
+      quoting: params,
+      step: Quote.step_to_atom(2)
+    }
+    %Quote{} 
     |> Quote.changeset(to_update)
     |> Repo.insert()
   end

@@ -1,4 +1,4 @@
-<%= form_for @changeset, "/quote/#{@params.token}", fn f -> %>
+<%= form_for @changeset, "/quotes/#{@params.token}", [method: "patch"], fn f -> %>
   <label>
     first_name: <%= text_input f, :first_name %>
   </label>

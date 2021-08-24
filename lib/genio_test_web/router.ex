@@ -17,10 +17,7 @@ defmodule GenioTestWeb.Router do
     pipe_through :browser
 
     get "/", WizardController, :new
-    post "/quote", WizardController, :create
-    get "/quote/:token", WizardController, :edit
-    post "/quote/:token", WizardController, :update
-    post "/quote/:token/:action", WizardController, :update
+    resources "/quotes", WizardController, only: [:new, :create, :update, :edit, :show] 
   end
 
   # Other scopes may use custom stacks.

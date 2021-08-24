@@ -1,18 +1,14 @@
 <h1>vehicle</h1>
-<p>name</p><%= @params.customer.first_name %>
-<p>last name</p><%= @params.customer.last_name %>
-<p>rfc</p><%= @params.customer.rfc %>
-<p>gender</p><%= @params.customer.gender %>
 
-<%= form_for @changeset, "/quote/#{@params.token}", fn f -> %>
+<%= form_for @changeset, "/quotes/#{@params.token}", [method: "patch"], fn f -> %>
   <label>
-    Select make <%= select(f, :make, ["Make1": "make1", "Make2": "make2", "Make3": "make3"]) %>
+    Select make <%= select(f, :make, ["Make1": "make1", "Make2": "make2", "Make3": "make3"], prompt: "Selecciona una marca") %>
   </label>
   <label>
-    Select model <%= select(f, :year_model, 2021..1990) %>
+    Select model <%= select(f, :year_model, 2021..1990, prompt: "Selecciona un modelo") %>
   </label>
   <label>
-    Select model <%= select(f, :version, ["np300": "np300", "cdl": "cdl",]) %>
+    Select model <%= select(f, :version, ["np300": "np300", "cdl": "cdl",], prompt: "Selecciona una version") %>
   </label>
   <%= submit "Submit" %>
 <% end %>

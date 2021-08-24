@@ -9,7 +9,7 @@ defmodule QuoteWizard.Step.Customer do
   def update(quote, step_params) do
     step_params
     |> valid?()
-    |> save(quote)
+    |> persist!(quote)
   end
 
   defp valid?(step_params) do
@@ -21,16 +21,14 @@ defmodule QuoteWizard.Step.Customer do
     end
   end
 
-  defp save({:error, changeset}, quote), do: {:error, changeset, quote}
-  defp save({:ok, params}, quote) do
+  defp persist!({:error, changeset}, quote), do: {:error, changeset, quote}
+  defp persist!({:ok, params}, quote) do
     to_update = %{
       customer: params,
-      step: Utils.next_step(quote.step)
+      step: Quote.next_step(quote.step)
     }
-    res = quote 
+    quote 
     |> Changeset.change(to_update)
-    |> Repo.update!()
-
-    {:ok, res}
+    |> Repo.update()
   end
 end
